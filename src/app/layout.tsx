@@ -36,25 +36,22 @@ export default async function RootLayout({
     );
   }
 
-  console.log(session.user);
-
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <div className="flex items-center justify-between px-[2.5vw] py-2">
+        <div className="border-b-solid mx-[2.5vw] mb-2 flex items-center justify-between border-b-[1px] border-b-[#e5e7eb] py-1 pr-2">
           <div className="flex items-center gap-4 pl-0">
-            <Button variant={"ghost"} size="sm" className="">
+            <Button variant={"ghost"} className="">
               ManageRM
             </Button>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <NavigationMenu />
             <Input
               size={24}
               className="h-8 rounded-sm"
               type="text"
               placeholder="Search"
-              itemProp="oops"
             />
             <SignInButton session={session} />
           </div>

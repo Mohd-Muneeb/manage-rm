@@ -14,14 +14,13 @@ import ClientButton from "~/components/client/ClientButton";
 
 const ManagersPage = () => {
   return (
-    <div>
+    <main className="px-[2.5vw]">
       <BreadCrumbs
         containerClasses="flex gap-1 items-center"
         homeElement={"Home"}
         separator={<ArrowRightIcon size={12} />}
       />
-      <hr className="my-2" />
-      <Typography className="mt-0">Add or view managers here</Typography>
+      <Typography className="mt-4">Add or view managers here</Typography>
       <div className="mt-4 flex gap-12">
         <Card className="w-96">
           <CardHeader>
@@ -47,7 +46,7 @@ const ManagersPage = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   );
 };
 

@@ -10,18 +10,6 @@ datasource db {
     url      = "postgresql://postgres:testing@localhost:5432/crmm?schema=public"
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -50,15 +38,63 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    role          String?   @default("viewer")
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
+    id                String        @id @default(cuid())
+    name              String?
+    email             String?       @unique
+    emailVerified     DateTime?
+    image             String?
+    role              String?       @default("viewer")
+    accounts          Account[]
+    sessions          Session[]
+    managersId        String?
+    mobile            Int?
+    countryCode       Int?
+    isEmailSubscribed Boolean       @default(true)
+    isSmsSubscribed   Boolean       @default(true)
+    isPhoneSubscribed Boolean       @default(true)
+    location          String        @default("500007")
+    createdAt         DateTime      @default(now())
+    updatedAt         DateTime      @updatedAt
+    language          String        @default("en")
+    emailRecieved     Int           @default(0)
+    smsRecieved       Int           @default(0)
+    phoneRecieved     Int           @default(0)
+    Organisation      Organisation? @relation(fields: [organisationId], references: [id])
+    organisationId    String?
+    Customer          Customer[]
+
+    @@index([name, email])
+}
+
+model Organisation {
+    id        String     @id @default(cuid())
+    name      String
+    desc      String?
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    profile   String?
+    domain    String?
+    User      User[]
+    Customer  Customer[]
+
+    @@index([name])
+}
+
+model Customer {
+    id             String       @id @default(cuid())
+    firstName      String?
+    lastName       String?
+    email          String
+    createdAt      DateTime
+    updatedAt      DateTime
+    organisation   Organisation @relation(fields: [organisationId], references: [id])
+    organisationId String
+    User           User         @relation(fields: [userId], references: [id])
+    domain         String
+    location       String[]     @default(["500007"])
+    userId         String
+
+    @@index([id, email])
 }
 
 model VerificationToken {

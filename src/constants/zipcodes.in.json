@@ -1,0 +1,28 @@
+[
+  {
+    "country_code": "IN",
+    "zipcode": "744301",
+    "place": "Carnicobar",
+    "state": "Andaman & Nicobar Islands",
+    "state_code": "01",
+    "province": "Nicobar",
+    "province_code": "638",
+    "community": "Carnicobar",
+    "community_code": "",
+    "latitude": "9.1833",
+    "longitude": "92.7667"
+  },
+  {
+    "country_code": "IN",
+    "zipcode": "500007",
+    "place": "Tarnaka",
+    "state": "Telangana",
+    "state_code": "01",
+    "province": "Hyderabad",
+    "province_code": "638",
+    "community": "Telugu",
+    "community_code": "",
+    "latitude": "9.1833",
+    "longitude": "92.7667"
+  }
+]

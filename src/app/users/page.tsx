@@ -21,6 +21,7 @@ import { UsersIcon } from "lucide-react";
 import { Typography } from "~/components/ui/typography";
 import CreateCustomer from "./(components)/CreateCustomer";
 import ClientButton from "~/components/client/ClientButton";
+import { User } from "@prisma/client";
 
 const UsersPage = async () => {
   const session = await getServerAuthSession()
@@ -32,6 +33,8 @@ const UsersPage = async () => {
       id: session?.user.id,
     },
   });
+
+  console.log(user?.organisationId);
 
   return (
     <div className="px-[2.5vw]">
@@ -62,7 +65,7 @@ const UsersPage = async () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateCustomer />
+            <CreateCustomer user={user} />
           </CardContent>
         </Card>
 
@@ -74,7 +77,7 @@ const UsersPage = async () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ClientButton path="/managers/create-managers">
+            <ClientButton path="/users/edit-customer">
               <div className="flex items-center gap-2">
                 <UsersIcon size={16} />
                 <Typography>{"Manage"}</Typography>

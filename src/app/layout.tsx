@@ -6,6 +6,7 @@ import SignInButton from "~/components/client/SignInButton";
 import { Inter } from "next/font/google";
 import { getServerAuthSession } from "~/server/auth";
 import { NavigationMenu } from "~/components/custom/navbar";
+import { Toaster } from "~/components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,6 +58,7 @@ export default async function RootLayout({
           </div>
         </div>
         {children}
+        <Toaster />
       </body>
     </html>
   );

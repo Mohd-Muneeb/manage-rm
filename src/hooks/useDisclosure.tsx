@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export const useDisclosure = (initialState?: boolean) => {
+export function useDisclosure(initialState?: boolean) {
   const [isOpen, setIsOpen] = useState<boolean>(initialState ?? false);
 
   const open = () => {
@@ -16,4 +16,4 @@ export const useDisclosure = (initialState?: boolean) => {
   const toggle = () => (isOpen ? close() : open());
 
   return { isOpen, open, close, toggle };
-};
+}

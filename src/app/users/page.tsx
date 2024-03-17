@@ -22,6 +22,7 @@ import { Typography } from "~/components/ui/typography";
 import CreateCustomer from "./(components)/CreateCustomer";
 import ClientButton from "~/components/client/ClientButton";
 import { User } from "@prisma/client";
+import CreateCustomerFromCSV from "./(components)/CreateCustomerFromCSV";
 
 const UsersPage = async () => {
   const session = await getServerAuthSession()

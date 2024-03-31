@@ -11,7 +11,8 @@ import { Typography } from "~/components/ui/typography";
 const CreateCustomerFromCSV = ({ user }: { user: User | null }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  console.log(user?.id, user?.domain, user?.email?.split("@")[1]);
+  // console.log(user?.id, user?.domain, user?.email?.split("@")[1]);
+
   const handleOnClick = () => {
     if (!inputRef?.current) return null;
 
@@ -29,7 +30,6 @@ const CreateCustomerFromCSV = ({ user }: { user: User | null }) => {
       body: formData,
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
       .catch((error) => console.error(error));
   };
 

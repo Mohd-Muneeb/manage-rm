@@ -42,7 +42,6 @@ export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
 
   const file = formData.get("file") as File;
-  console.log(formData);
   if (!file) {
     return NextResponse.json({ error: "No files received." }, { status: 400 });
   }
@@ -60,7 +59,7 @@ export const POST = async (req: NextRequest) => {
       data: json_data.map((elem) => {
         return {
           ...elem,
-          location: [elem.location ?? "500007"],
+          location: elem.location ?? "500007",
           organisationId: organisationId,
           userId: userId,
         };

@@ -32,14 +32,19 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
+    VONAGE_SMS_API_SECRET: z.string(),
+    VONAGE_SMS_API_PUBLIC: z.string(),
+    SMTP_EMAIL: z.string(),
+    SMTP_PASSWORD: z.string(),
   },
 
-  /**
+  /*
    * Specify your client-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars. To expose them to the client, prefix them with
    * `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_BASE_URL: z.string()
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
   },
 
@@ -56,6 +61,11 @@ export const env = createEnv({
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    VONAGE_SMS_API_SECRET: process.env.VONAGE_SMS_API_SECRET,
+    VONAGE_SMS_API_PUBLIC: process.env.VONAGE_SMS_API_PUBLIC,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+    SMTP_EMAIL: process.env.SMTP_EMAIL,
+    SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

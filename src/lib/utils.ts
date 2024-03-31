@@ -46,7 +46,5 @@ export async function getLocationName(
     .then((data) => data.json())
     .then((data: PostOfficeResponse) => data);
 
-  console.log();
-
   return locationData.PostOffice?.[0]?.Name ?? "Unavailable";
 }

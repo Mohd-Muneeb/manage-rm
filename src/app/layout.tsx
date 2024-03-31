@@ -1,5 +1,4 @@
 import "~/styles/globals.css";
-
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import SignInButton from "~/components/client/SignInButton";
@@ -7,6 +6,7 @@ import { Inter } from "next/font/google";
 import { getServerAuthSession } from "~/server/auth";
 import { NavigationMenu } from "~/components/custom/navbar";
 import { Toaster } from "~/components/ui/toaster";
+import ClientBreadCrumbs from "~/components/client/ClientBreadCrumbs";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,15 +28,6 @@ export default async function RootLayout({
     .then((data) => data)
     .catch((err) => console.error(err));
 
-  if (!session?.user) {
-    return (
-      <div>
-        <Button />
-        <h1>need to login</h1>
-      </div>
-    );
-  }
-
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
@@ -54,9 +45,10 @@ export default async function RootLayout({
               type="text"
               placeholder="Search"
             />
-            <SignInButton session={session} />
+            {session ? <SignInButton session={session} /> : null}
           </div>
         </div>
+        <ClientBreadCrumbs />
         {children}
         <Toaster />
       </body>

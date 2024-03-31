@@ -49,7 +49,7 @@ const columns: ColumnDef<z.infer<typeof customerTableDataType>>[] = [
     accessorFn: (row) => row,
     header: "SMS Subscribed",
     cell(props) {
-      return <div>{props.getValue().isEmailSubscribed ? "Yes" : "No"}</div>;
+      return <div>{props.getValue().isSmsSubscribed ? "Yes" : "No"}</div>;
     },
   },
   {

@@ -2,106 +2,105 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = "postgresql://postgres:testing@localhost:5432/crmm?schema=public"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? // @db.Text
+  access_token      String? // @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? // @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id             String        @id @default(cuid())
-    name           String?
-    email          String?       @unique
-    emailVerified  DateTime?
-    image          String?
-    role           String?       @default("viewer")
-    accounts       Account[]
-    sessions       Session[]
-    mobile         Int?
-    countryCode    Int?
-    domain         String?
-    location       String        @default("500007")
-    createdAt      DateTime      @default(now())
-    updatedAt      DateTime      @updatedAt
-    Organisation   Organisation? @relation(fields: [organisationId], references: [id])
-    organisationId String?
-    Customer       Customer[]
+  id             String        @id @default(cuid())
+  name           String?
+  email          String?       @unique
+  emailVerified  DateTime?
+  image          String?
+  role           String?       @default("viewer")
+  accounts       Account[]
+  sessions       Session[]
+  mobile         Int?
+  countryCode    Int?
+  domain         String?
+  location       String[]      @default(["500007"])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  Organisation   Organisation? @relation(fields: [organisationId], references: [id])
+  organisationId String?
+  Customer       Customer[]
 
-    @@index([name, email])
+  @@index([name, email])
 }
 
 model Organisation {
-    id        String     @id @default(cuid())
-    name      String
-    desc      String?
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-    profile   String?
-    domain    String?
-    User      User[]
-    Customer  Customer[]
+  id        String     @id @default(cuid())
+  name      String
+  desc      String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  profile   String?
+  domain    String?    @unique
+  User      User[]
+  Customer  Customer[]
 
-    @@index([name])
+  @@index([name])
 }
 
 model Customer {
-    id                String       @id @default(cuid())
-    firstName         String?
-    lastName          String?
-    email             String
-    createdAt         DateTime     @default(now())
-    updatedAt         DateTime     @updatedAt
-    isEmailSubscribed Boolean      @default(true)
-    isSmsSubscribed   Boolean      @default(true)
-    isPhoneSubscribed Boolean      @default(true)
-    language          String       @default("en")
-    organisation      Organisation @relation(fields: [organisationId], references: [id])
-    organisationId    String
-    emailRecieved     Int          @default(0)
-    smsRecieved       Int          @default(0)
-    phoneRecieved     Int          @default(0)
-    mobile            String?
-    countryCode       String?
-    User              User         @relation(fields: [userId], references: [id])
-    location          String[]     @default(["500007"])
-    userId            String
+  id                String       @id @default(cuid())
+  firstName         String?
+  lastName          String?
+  email             String       @unique
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  isEmailSubscribed Boolean      @default(true)
+  isSmsSubscribed   Boolean      @default(true)
+  isPhoneSubscribed Boolean      @default(true)
+  language          String       @default("en")
+  organisation      Organisation @relation(fields: [organisationId], references: [id])
+  organisationId    String
+  emailRecieved     Int          @default(0)
+  smsRecieved       Int          @default(0)
+  phoneRecieved     Int          @default(0)
+  mobile            String?
+  User              User         @relation(fields: [userId], references: [id])
+  location          String       @default("500007")
+  userId            String
 
-    @@index([id, email])
+  @@index([id, email])
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }

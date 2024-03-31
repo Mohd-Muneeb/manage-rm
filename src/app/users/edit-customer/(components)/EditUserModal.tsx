@@ -88,8 +88,6 @@ const EditUserModal = ({
   const handleCustomerFormSubmit = async (
     values: z.infer<typeof formSchema>,
   ) => {
-    console.log(values);
-
     await fetch("/api/customer", {
       headers: {
         "Content-Type": "application/json",
@@ -142,7 +140,6 @@ const EditUserModal = ({
             Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleCustomerFormSubmit)}

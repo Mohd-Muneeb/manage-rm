@@ -29,12 +29,11 @@ export const POST = async (request: NextRequest) => {
     data: {
       firstName: body.firstName,
       lastName: body.lastName,
-      location: [body.location],
+      location: body.location,
       email: body.email,
       organisation: {
         connect: { id: body.organisationId },
       },
-      countryCode: "+91",
       mobile: body.mobile,
       User: {
         connect: { id: body.userId },
@@ -48,8 +47,6 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const GET = async () => {
-  console.log("goat");
-
   return new NextResponse(JSON.stringify({ answer: "John Doe" }), {
     status: 200,
   });

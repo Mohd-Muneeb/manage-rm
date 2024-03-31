@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -29,6 +29,7 @@ import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
 import { type User } from "@prisma/client";
 import CreateCustomerFromCSV from "./CreateCustomerFromCSV";
+import { PhoneInput } from "~/components/ui/phone-input";
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -58,8 +59,6 @@ const CreateCustomer = ({ user }: { user: User | null }) => {
   const handleCustomerFormSubmit = async (
     values: z.infer<typeof formSchema>,
   ) => {
-    console.log(values);
-
     await fetch("/api/customer/add-via-form", {
       headers: {
         "Content-Type": "application/json",
@@ -68,12 +67,11 @@ const CreateCustomer = ({ user }: { user: User | null }) => {
       body: JSON.stringify({
         ...values,
         userId: user?.id,
-        location: user?.location,
+        location: user?.location[0],
         organisationId: user?.organisationId,
       }),
     })
       .then((data) => {
-        console.log("asdfasdfasd");
         if (data.status === 200) {
           toast({
             title: "Uploaded Customer Successfully!",
@@ -177,9 +175,9 @@ const CreateCustomer = ({ user }: { user: User | null }) => {
                   name="mobile"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel>Mobile</FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" {...field} />
+                        <PhoneInput defaultCountry="IN" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -194,6 +192,7 @@ const CreateCustomer = ({ user }: { user: User | null }) => {
                       form.resetField("mobile");
                       close();
                     }}
+                    variant={"outline"}
                     type="button"
                   >
                     Discard

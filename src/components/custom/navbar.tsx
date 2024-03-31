@@ -14,6 +14,7 @@ import {
   navigationMenuTriggerStyle,
   NavigationMenuIndicator,
 } from "@/components/ui/navigation-menu";
+import { loadStripe } from "@stripe/stripe-js";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -58,63 +59,34 @@ const NavigationMenuDemo = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem className="left-40">
-          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Dashboard</NavigationMenuTrigger>
           <NavigationMenuContent color="pink">
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components that you can copy and
-                      paste into your apps. Accessible. Customizable. Open
-                      Source.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
+            <ul className="flex w-[300px] flex-col gap-4 p-4">
+              <ListItem href="/dashboard/send-email" title="Send Email">
+                Send Email's here for free
               </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
+              <ListItem href="/dashboard/send-sms" title="Send SMs">
+                Send SMS here
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-          <NavigationMenuContent className="left-auto right-0 items-center">
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
+          <Link href="/managers">Managers</Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem className="left-40">
+          <NavigationMenuTrigger>Customers</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="flex w-[300px] flex-col gap-4 p-4">
+              <ListItem href="/users" title="Customers">
+                Show Customer Options
+              </ListItem>
+              <ListItem href="/dashboard/send-sms" title="Edit Customers">
+                Edit Customers
+              </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuIndicator className="NavigationMenuIndicator" />
       </NavigationMenuList>
     </NavigationMenu>
   );

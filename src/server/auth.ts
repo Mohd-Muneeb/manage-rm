@@ -7,7 +7,6 @@ import {
 import { type Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
-
 import { env } from "~/env";
 import { db } from "~/server/db";
 
@@ -21,15 +20,16 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
       role: "viewer" | "editor" | "admin";
+      domain: string;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    // ...other properties
+    role: "viewer" | "editor" | "admin";
+    domain: string;
+  }
 }
 
 /**
@@ -44,9 +44,13 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
-        role: "viewer",
+        role: user?.role,
+        domain: user.email.split("@")[1],
       },
     }),
+    async redirect({ url, baseUrl }) {
+      return `${baseUrl}/new/starter-guide`;
+    },
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [

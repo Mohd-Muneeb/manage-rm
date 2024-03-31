@@ -6,14 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
 import { getLocationName } from "~/lib/utils";
@@ -21,13 +13,13 @@ import { UsersIcon } from "lucide-react";
 import { Typography } from "~/components/ui/typography";
 import CreateCustomer from "./(components)/CreateCustomer";
 import ClientButton from "~/components/client/ClientButton";
-import { User } from "@prisma/client";
-import CreateCustomerFromCSV from "./(components)/CreateCustomerFromCSV";
 
 const UsersPage = async () => {
   const session = await getServerAuthSession()
     .then((data) => data)
     .catch((err) => console.error(err));
+
+  console.log(session?.user.id);
 
   const user = await db.user.findFirst({
     where: {
@@ -35,26 +27,11 @@ const UsersPage = async () => {
     },
   });
 
-  console.log(user?.organisationId);
-
   return (
     <div className="px-[2.5vw]">
-      <div>
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Users</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
       <h1 className="mt-4">
         Showing customers for the location{" "}
-        {(await getLocationName(user?.location)) ?? ""}
+        {(await getLocationName(user?.location[0])) ?? ""}
       </h1>
       <br />
       <div className="flex gap-6">

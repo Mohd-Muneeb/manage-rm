@@ -1,5 +1,5 @@
 :qweqweqweqweqweqweqweqeqweqwe
-# Manage RM
+# Managqweqweqwee RM
 
 This is a project is a B2C application which allows companies to send email and SMS in bulk to multiple companies. [Video](https://www.youtube.com/watch?v=65qZACEM9P4)
 
